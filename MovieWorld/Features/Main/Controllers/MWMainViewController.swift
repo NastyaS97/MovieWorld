@@ -11,6 +11,7 @@ class MWMainViewController: MWViewController {
 
     enum MovieCategory: String {
         case popular = "Popular"
+        case upcoming = "Upcoming"
     }
 
     private var movies: [MovieCategory: [MWMovie]] = [:]
@@ -48,10 +49,69 @@ class MWMainViewController: MWViewController {
         self.tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+
+        self.sendPopularMoviesRequest()
     }
 
     @objc private func refreshPulled() {
-        // refresh logic
+        self.sendPopularMoviesRequest()
+    }
+
+    private func sendPopularMoviesRequest() {
+        MWNet.sh.requestAlamofire(
+            urlPath: MWUrlPaths.popularMovies,
+            parameters: nil,
+            okHandler: { [weak self] (model: MWPopularMovieResponse) in
+                self?.handleResponse(model: model)
+            },
+            errorHandler: { [weak self] (error: MWNetError) in
+                self?.handleError(error: error)
+            })
+    }
+
+    private func handleResponse(model: MWPopularMovieResponse) {
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
+
+        self.movies[.popular] = model.results
+        self.movies[.upcoming] = model.results
+
+        self.tableView.reloadData()
+
+        Swift.debugPrint(model.page)
+        Swift.debugPrint(model.total_pages)
+        Swift.debugPrint(model.total_results)
+
+        model.results.forEach {
+            Swift.debugPrint("id: \($0.id)")
+            Swift.debugPrint($0.title)
+            Swift.debugPrint($0.popularity)
+            Swift.debugPrint($0.overview ?? "No overview")
+        }
+    }
+
+    private func handleError(error: MWNetError) {
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
+        
+        let title: String = "Error"
+        var message: String = "Something went wrong!"
+        switch error {
+        case .incorrectUrl:
+            message = "Incorrect URL"
+        case .networkError(let error):
+            message = error.localizedDescription
+        default:
+            break
+        }
+
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        self.present(alert, animated: true)
     }
 
 }
