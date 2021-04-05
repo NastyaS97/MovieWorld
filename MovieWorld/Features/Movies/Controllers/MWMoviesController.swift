@@ -5,7 +5,7 @@
 //  Created by Анастасия Корнеева on 1.04.21.
 //
 
-import Foundation
+import UIKit
 
 class MWMoviesController: MWViewController {
 
@@ -34,9 +34,84 @@ class MWMoviesController: MWViewController {
 
     private lazy var models: [MWMovieModel] = self.imageUrls.map { MWMovieModel(imageUrl: $0) }
 
+    // MARK: - gui variables
+
+    private lazy var collectionLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+//        layout.estimatedItemSize = .zero
+
+        return layout
+    }()
+
+    private lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero,
+                                    collectionViewLayout: self.collectionLayout)
+        view.backgroundColor = .white
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        view.delegate = self
+        view.dataSource = self
+        view.register(MWMovieCell.self,
+                      forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
+
+        return view
+    }()
+
+    // MARK: - initialization
+
     override func initController() {
         super.initController()
 
         self.controllerTitle = "Movies"
+
+        self.setContentScrolling(isEnabled: false)
+
+        self.mainView.addSubview(self.collectionView)
+
+        self.collectionView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
+extension MWMoviesController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.models.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWMovieCell.reuseIdentifier, for: indexPath)
+
+        if let cell = cell as? MWMovieCell {
+            cell.set(title: "Movie #(\(indexPath.row))", date: Date())
+        }
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Swift.debugPrint(indexPath.row)
+    }
+}
+
+extension MWViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 150, height: 150)
+        let spaceBetweenCells: CGFloat = 5
+        let cellForRows: CGFloat = 3
+        let availableCollectionWidth = collectionView.bounds.width - 10
+        let width = (availableCollectionWidth - spaceBetweenCells * (cellForRows - 1)) / cellForRows
+        return CGSize(width: width, height: width * 2)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(all: 5)
     }
 }
