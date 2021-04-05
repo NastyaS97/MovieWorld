@@ -10,6 +10,10 @@ import SnapKit
 
 class MWViewController: UIViewController {
 
+    private let cellsPerRow: CGFloat = 3
+        private let contentInset = UIEdgeInsets(all: 5)
+        private let spaceBetweenCells: CGFloat = 20
+
     var controllerTitle: String? {
         get {
             self.navigationItem.title
