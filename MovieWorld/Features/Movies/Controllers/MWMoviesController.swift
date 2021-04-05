@@ -10,8 +10,8 @@ import UIKit
 class MWMoviesController: MWViewController {
 
     private let cellsPerRow: CGFloat = 3
-        private let contentInset = UIEdgeInsets(all: 5)
-        private let spaceBetweenCells: CGFloat = 20
+    let contentInset = UIEdgeInsets(all: 5)
+    private let spaceBetweenCells: CGFloat = 20
 
     private let imageUrls: [String] = [
         "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596449750_6002",
@@ -79,7 +79,7 @@ class MWMoviesController: MWViewController {
     }
 }
 
-extension MWMoviesController: UICollectionViewDataSource {
+extension MWMoviesController: UICollectionViewDelegate, UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.models.count
     }
@@ -97,9 +97,9 @@ extension MWMoviesController: UICollectionViewDataSource {
     }
 }
 
-extension MWViewController: UICollectionViewDelegateFlowLayout {
+extension MWMoviesController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //        return CGSize(width: 150, height: 150)
+    
         let availableWidth = collectionView.bounds.width - self.contentInset.left - self.contentInset.right
         let width = ((availableWidth - self.spaceBetweenCells * (self.cellsPerRow - 1)) / self.cellsPerRow)
         return CGSize(width: width, height: width * 2)
