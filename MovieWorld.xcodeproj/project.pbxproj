@@ -32,7 +32,7 @@
 		03E0A860261B4F3300BD04B4 /* MWErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0A85F261B4F3300BD04B4 /* MWErrors.swift */; };
 		03E0A864261B50CA00BD04B4 /* Url+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0A863261B50CA00BD04B4 /* Url+Ex.swift */; };
 		03E0A867261B51F800BD04B4 /* MWUrlPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0A866261B51F800BD04B4 /* MWUrlPaths.swift */; };
-		03E0A86B261B5DDE00BD04B4 /* WMCaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0A86A261B5DDE00BD04B4 /* WMCaller.swift */; };
+		03E0A86B261B5DDE00BD04B4 /* MWCaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0A86A261B5DDE00BD04B4 /* MWCaller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +61,7 @@
 		03E0A85F261B4F3300BD04B4 /* MWErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWErrors.swift; sourceTree = "<group>"; };
 		03E0A863261B50CA00BD04B4 /* Url+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Url+Ex.swift"; sourceTree = "<group>"; };
 		03E0A866261B51F800BD04B4 /* MWUrlPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWUrlPaths.swift; sourceTree = "<group>"; };
-		03E0A86A261B5DDE00BD04B4 /* WMCaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMCaller.swift; sourceTree = "<group>"; };
+		03E0A86A261B5DDE00BD04B4 /* MWCaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCaller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,7 +280,7 @@
 		03E0A869261B5DD200BD04B4 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
-				03E0A86A261B5DDE00BD04B4 /* WMCaller.swift */,
+				03E0A86A261B5DDE00BD04B4 /* MWCaller.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -382,7 +382,7 @@
 				03E0A854261B4E9700BD04B4 /* MWPopularMovieResponse.swift in Sources */,
 				03E0A844261B482C00BD04B4 /* MWRowCell.swift in Sources */,
 				03E0A860261B4F3300BD04B4 /* MWErrors.swift in Sources */,
-				03E0A86B261B5DDE00BD04B4 /* WMCaller.swift in Sources */,
+				03E0A86B261B5DDE00BD04B4 /* MWCaller.swift in Sources */,
 				03C41DDE2615E10E0055D985 /* UIView+Ex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

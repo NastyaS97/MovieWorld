@@ -71,60 +71,6 @@ class MWNetwork {
         return dataTask
     }
 
-    func request<T: Decodable>(urlPath: String,
-                               parameters: [String: String]? = nil,
-                               okHandler: @escaping (T) -> Void,
-                               errorHandler: @escaping (MWNetError) -> Void) {
-        var urlParameters = self.parameters
-        if let parameters = parameters {
-            parameters.forEach { urlParameters[$0.key] = $0.value }
-        }
-
-        guard let url = URL(urlString: self.baseURL,
-                            path: urlPath,
-                            params: urlParameters) else {
-
-            errorHandler(MWNetError.incorrectUrl)
-            return
-        }
-
-        let request = URLRequest(url: url)
-        let dataTask = self.session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                DispatchQueue.main.async {
-                    errorHandler(.networkError(error: error))
-                }
-                return
-            } else if let data = data,
-                      let response = response as? HTTPURLResponse {
-                switch response.statusCode {
-                case 200...300:
-                    // Success server response handling
-                    do {
-                        let model = try JSONDecoder().decode(T.self, from: data)
-                        DispatchQueue.main.async {
-                            okHandler(model)
-                        }
-                    } catch let error {
-                        DispatchQueue.main.async {
-                            errorHandler(.parsingError(error: error))
-                        }
-                    }
-                case 401, 404:
-                    Swift.debugPrint(String(decoding: data, as: UTF8.self))
-                    // TODO: - 401: handle expired auth session
-                    break
-                default:
-                    DispatchQueue.main.async {
-                        errorHandler(.serverError(statusCode: response.statusCode))
-                    }
-                }
-            }
-        }
-
-        dataTask.resume()
-    }
-
     func requestAlamofire<T: Decodable>(urlPath: String,
                                         parameters: [String: String]? = nil,
                                         okHandler: @escaping (T) -> Void,

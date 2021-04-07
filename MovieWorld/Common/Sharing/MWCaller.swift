@@ -1,5 +1,5 @@
 //
-//  WMCaller.swift
+//  MWCaller.swift
 //  MovieWorld
 //
 //  Created by Анастасия Корнеева on 5.04.21.
@@ -8,7 +8,7 @@
 import UIKit
 import MessageUI
 
-class WMCaller {
+class MWCaller {
 
     enum SocialNetwork {
         case skype(id: String)

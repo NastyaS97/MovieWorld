@@ -78,17 +78,6 @@ class MWMainViewController: MWViewController {
         self.movies[.upcoming] = model.results
 
         self.tableView.reloadData()
-
-        Swift.debugPrint(model.page)
-        Swift.debugPrint(model.total_pages)
-        Swift.debugPrint(model.total_results)
-
-        model.results.forEach {
-            Swift.debugPrint("id: \($0.id)")
-            Swift.debugPrint($0.title)
-            Swift.debugPrint($0.popularity)
-            Swift.debugPrint($0.overview ?? "No overview")
-        }
     }
 
     private func handleError(error: MWNetError) {
