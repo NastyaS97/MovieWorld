@@ -82,7 +82,7 @@ class MWMainMovieCell: UICollectionViewCell {
         self.logoView.image = UIImage(named: "movieStub")
 
         self.titleLabel.text = movie.title
-        self.descriptionLabel.text = "\(movie.releaseDate)"
+        self.descriptionLabel.text = movie.releaseDate
 
         if let poster = movie.posterPath {
             self.loadImage(posterPath: poster)
