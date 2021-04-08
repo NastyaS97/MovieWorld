@@ -11,7 +11,6 @@ class MWMainViewController: MWViewController {
 
     enum MovieCategory: String {
         case popular = "Popular"
-        case upcoming = "Upcoming"
     }
 
     private var movies: [MovieCategory: [MWMovie]] = [:]
@@ -50,8 +49,6 @@ class MWMainViewController: MWViewController {
             make.edges.equalToSuperview()
         }
         self.sendPopularRequest()
-
-        self.sendPopularMoviesRequest()
     }
 
     @objc private func refreshPulled() {
@@ -80,55 +77,6 @@ class MWMainViewController: MWViewController {
         }
 
     }
-        self.sendPopularMoviesRequest()
-    }
-
-    private func sendPopularMoviesRequest() {
-        MWNet.sh.requestAlamofire(
-            urlPath: MWUrlPaths.popularMovies,
-            parameters: nil,
-            okHandler: { [weak self] (model: MWPopularMovieResponse) in
-                self?.handleResponse(model: model)
-            },
-            errorHandler: { [weak self] (error: MWNetError) in
-                self?.handleError(error: error)
-            })
-    }
-
-    private func handleResponse(model: MWPopularMovieResponse) {
-        if self.refreshControl.isRefreshing {
-            self.refreshControl.endRefreshing()
-        }
-
-        self.movies[.popular] = model.results
-        self.movies[.upcoming] = model.results
-
-        self.tableView.reloadData()
-    }
-
-    private func handleError(error: MWNetError) {
-        if self.refreshControl.isRefreshing {
-            self.refreshControl.endRefreshing()
-        }
-        
-        let title: String = "Error"
-        var message: String = "Something went wrong!"
-        switch error {
-        case .incorrectUrl:
-            message = "Incorrect URL"
-        case .networkError(let error):
-            message = error.localizedDescription
-        default:
-            break
-        }
-
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert)
-        self.present(alert, animated: true)
-    }
-
 }
 
 extension MWMainViewController: UITableViewDelegate, UITableViewDataSource {

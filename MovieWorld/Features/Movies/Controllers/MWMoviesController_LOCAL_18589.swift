@@ -10,10 +10,6 @@ import UIKit
 class MWMoviesController: MWViewController {
 
     private let cellsPerRow: CGFloat = 3
-    private let contentInset = UIEdgeInsets(all: 5)
-    private let spaceBetweenCells: CGFloat = 20
-
-    private let cellsPerRow: CGFloat = 3
     let contentInset = UIEdgeInsets(all: 5)
     private let spaceBetweenCells: CGFloat = 20
 
@@ -37,7 +33,6 @@ class MWMoviesController: MWViewController {
         "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596450133_2710",
         "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596450154_18007",
         "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596450174_26808",
-        "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596450200_18730",
         "https://s3-eu-west-1.amazonaws.com/uploads.playbaamboozle.com/uploads/images/54999/1596450200_18730"
     ]
 
@@ -49,31 +44,6 @@ class MWMoviesController: MWViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
 //        layout.estimatedItemSize = .zero
-
-        return layout
-    }()
-
-    private lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero,
-                                    collectionViewLayout: self.collectionLayout)
-        view.backgroundColor = .white
-        view.showsVerticalScrollIndicator = false
-        view.showsHorizontalScrollIndicator = false
-        view.delegate = self
-        view.dataSource = self
-        view.register(MWMovieCell.self,
-                      forCellWithReuseIdentifier: MWMovieCell.reuseIdentifier)
-
-        return view
-    }()
-
-    // MARK: - initialization
-
-    // MARK: - gui variables
-
-    private lazy var collectionLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
 
         return layout
     }()
@@ -145,53 +115,5 @@ extension MWMoviesController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(all: 5)
-
-        self.setContentScrolling(isEnabled: false)
-
-        self.mainView.addSubview(self.collectionView)
-
-        self.collectionView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-    }
-}
-
-extension MWMoviesController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.models.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWMovieCell.reuseIdentifier, for: indexPath)
-
-        if let cell = cell as? MWMovieCell {
-            cell.set(title: "Movie #(\(indexPath.row + 1))", date: Date())
-        }
-
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Swift.debugPrint(indexPath.row)
-    }
-}
-
-extension MWMoviesController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = collectionView.bounds.width - self.contentInset.left - self.contentInset.right
-        let width = ((availableWidth - self.spaceBetweenCells * (self.cellsPerRow - 1)) / self.cellsPerRow)
-        return CGSize(width: width, height: width * 2)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return self.spaceBetweenCells
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return self.contentInset
     }
 }

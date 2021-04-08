@@ -80,9 +80,11 @@ class MWMainMovieCell: UICollectionViewCell {
 
     func set(movie: MWMovie) {
         self.logoView.image = UIImage(named: "movieStub")
+<<<<<<< HEAD
         self.titleLabel.text = movie.title
         self.descriptionLabel.text = movie.overview
         // TODO: - add files prasing
+=======
 
         self.titleLabel.text = movie.title
         self.descriptionLabel.text = movie.releaseDate
@@ -90,6 +92,7 @@ class MWMainMovieCell: UICollectionViewCell {
         if let poster = movie.posterPath {
             self.loadImage(posterPath: poster)
         }
+>>>>>>> d8eff9a2a85994894d43e9f8da6e852a43942c93
 
         self.setNeedsUpdateConstraints()
     }

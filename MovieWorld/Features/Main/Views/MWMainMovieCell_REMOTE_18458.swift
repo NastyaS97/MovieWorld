@@ -80,9 +80,6 @@ class MWMainMovieCell: UICollectionViewCell {
 
     func set(movie: MWMovie) {
         self.logoView.image = UIImage(named: "movieStub")
-        self.titleLabel.text = movie.title
-        self.descriptionLabel.text = movie.overview
-        // TODO: - add files prasing
 
         self.titleLabel.text = movie.title
         self.descriptionLabel.text = movie.releaseDate

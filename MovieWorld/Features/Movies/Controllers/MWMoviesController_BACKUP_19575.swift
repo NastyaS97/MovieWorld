@@ -10,11 +10,11 @@ import UIKit
 class MWMoviesController: MWViewController {
 
     private let cellsPerRow: CGFloat = 3
-    private let contentInset = UIEdgeInsets(all: 5)
+    let contentInset = UIEdgeInsets(all: 5)
     private let spaceBetweenCells: CGFloat = 20
 
     private let cellsPerRow: CGFloat = 3
-    let contentInset = UIEdgeInsets(all: 5)
+    private let contentInset = UIEdgeInsets(all: 5)
     private let spaceBetweenCells: CGFloat = 20
 
     private let imageUrls: [String] = [
